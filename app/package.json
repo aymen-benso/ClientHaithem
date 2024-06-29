@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@nivo/bar": "^0.87.0",
     "@nivo/line": "^0.87.0",
     "@nivo/pie": "^0.87.0",
@@ -17,6 +20,8 @@
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "framer-motion": "^11.2.11",
+    "isomorphic-ws": "^5.0.0",
     "lucide-react": "^0.396.0",
     "next": "14.2.4",
     "react": "^18.3.1",
