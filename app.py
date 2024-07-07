@@ -1,5 +1,6 @@
 import asyncio
 import json
+import csv
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from sec import PacketSniffer  # Assuming srp.py is in the same directory
@@ -50,10 +51,24 @@ async def run_sniffer():
     loop = asyncio.get_event_loop()
     await loop.run_in_executor(None, sniffer.capture_packets)
 
+# Function to write flow data to a CSV file
+def write_to_csv(flow_data):
+    with open('flow_data.csv', 'a', newline='') as csvfile:
+        fieldnames = list(flow_data.keys())
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        if csvfile.tell() == 0:
+            writer.writeheader()
+        writer.writerow(flow_data)
+
 # Run the sniffer as a background task when the application starts
 @app.on_event("startup")
 async def startup_event():
     asyncio.create_task(run_sniffer())
+
+    # Write the initial flow data to the CSV file
+    for flow_id, flow_data in sniffer.flows.items():
+        write_to_csv(flow_data)
 
 @app.get("/")
 def read_root():
